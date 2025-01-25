@@ -9,7 +9,7 @@ public class FoodController {
 
         @GetMapping("/")
         public String diet() {
-            return "foodRecord"; // resources/templates/diet_record.html 로 연결
+            return "foodRecord";
         }
 
 

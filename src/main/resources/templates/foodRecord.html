@@ -1,164 +1,56 @@
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diet Record</title>
-  <style>
-    /* Normalizing CSS */
-    body, ul, li {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .tabs {
-      display: flex;
-      border-bottom: 2px solid #ddd;
-      margin-bottom: 20px;
-    }
-
-    .tab {
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      color: black;
-      border: 2px solid transparent;
-    }
-
-    .tab:hover,
-    .tab.active {
-      background-color: #007bff;
-      color: white;
-      border: 2px solid #007bff;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .card {
-      flex: 1 1 calc(50% - 20px);
-      max-width: calc(50% - 20px);
-      background-color: #e6f0ff;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      position: relative;
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-    }
-
-    .card .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    .card .title {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .card .plus {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #007bff;
-      cursor: pointer;
-    }
-  </style>
+  <title>Diet Tracker</title>
+  <link rel="stylesheet" href="/css/food.css">
 </head>
 <body>
-<div class="container">
-  <div class="tabs">
-    <div class="tab active" data-tab="record">기록</div>
-    <div class="tab" data-tab="list">목록</div>
-    <div class="tab" data-tab="analysis">내 식단 분석</div>
-  </div>
+<!-- 상단 탭 -->
+<div class="tabs">
+  <button class="tab-button active" data-tab="record">기록</button>
+  <button class="tab-button" data-tab="list">목록</button>
+  <button class="tab-button" data-tab="analysis">내 식단 분석</button>
+</div>
 
-  <div id="record" class="tab-content active">
-    <div class="cards">
-      <div class="card">
-        <div class="icon">🌅</div>
-        <div class="title">아침</div>
-        <div class="plus">+</div>
-      </div>
-      <div class="card">
-        <div class="icon">⛅</div>
-        <div class="title">점심</div>
-        <div class="plus">+</div>
-      </div>
-      <div class="card">
-        <div class="icon">🌙</div>
-        <div class="title">저녁</div>
-        <div class="plus">+</div>
-      </div>
-      <div class="card">
-        <div class="icon">💡</div>
-        <div class="title">Lorem Ipsum</div>
-      </div>
+<!-- 외곽 박스 -->
+<div class="outer-container">
+  <div class="content-wrapper">
+    <div class="card morning">
+      <button class="plus-button">+</button>
+      <div class="icon"><img src="/images/아침.png" alt="아침"></div>
+      <div class="title">아침</div>
     </div>
-  </div>
-
-  <div id="list" class="tab-content">
-    <h2>목록 화면</h2>
-    <p>목록 화면 내용</p>
-  </div>
-
-  <div id="analysis" class="tab-content">
-    <h2>내 식단 분석 화면</h2>
-    <p>내 식단 분석 화면 내용</p>
+    <div class="card lunch">
+      <button class="plus-button">+</button>
+      <div class="icon"><img src="/images/점심.png" alt="점심"></div>
+      <div class="title">점심</div>
+    </div>
+    <div class="card dinner">
+      <button class="plus-button">+</button>
+      <div class="icon"><img src="/images/저녁.png" alt="저녁"></div>
+      <div class="title">저녁</div>
+    </div>
+    <div class="card idea">
+      <button class="plus-button">+</button>
+      <div class="icon idea"><img src="/images/전구.png" alt="전구"></div>
+      <p class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        dkrugnbjgskhtgroskdjfbvsowqpltfjtslawiotkscvbvbzue
+        dksjghtlsxcjvriwpqwdkvnbgjt
+      </p>
+    </div>
   </div>
 </div>
 
 <script>
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.tab-content');
+  const tabs = document.querySelectorAll('.tab-button');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
-      contents.forEach(c => c.classList.remove('active'));
-
       tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
     });
   });
 </script>
