@@ -32,8 +32,8 @@ public class KakaoAuthService {
 
 
     public String getKakaoAccessToken(String code) {
-        System.out.println("📢 getKakaoAccessToken() 실행됨");
-        System.out.println("📢 받은 인증 코드: " + code);
+        System.out.println("getKakaoAccessToken() 실행됨");
+        System.out.println("받은 인증 코드: " + code);
 
         String tokenUrl = "https://kauth.kakao.com/oauth/token";
 
@@ -54,14 +54,14 @@ public class KakaoAuthService {
                     tokenUrl, HttpMethod.POST, request, String.class
             );
 
-            System.out.println("📢 카카오 응답: " + response.getBody());
+            System.out.println("카카오 응답: " + response.getBody());
 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
 
             return jsonNode.get("access_token").asText();
         } catch (Exception e) {
-            System.out.println("🚨 액세스 토큰 요청 실패: " + e.getMessage());
+            System.out.println("액세스 토큰 요청 실패: " + e.getMessage());
             throw new RuntimeException("카카오 액세스 토큰 요청 실패", e);
         }
     }
@@ -84,30 +84,30 @@ public class KakaoAuthService {
 
             Map<String, Object> userInfo = new HashMap<>();
 
-            // ✅ 카카오 고유 ID
+            // 카카오 고유 ID
             if (jsonNode.has("id")) {
                 userInfo.put("id", jsonNode.get("id").asText());
             }
 
-            // ✅ 이메일 (비활성화된 경우 없을 수 있음)
+            // 이메일 (비활성화된 경우 없을 수 있음)
             if (jsonNode.has("kakao_account") && jsonNode.get("kakao_account").has("email")) {
                 userInfo.put("email", jsonNode.get("kakao_account").get("email").asText());
             } else {
                 userInfo.put("email", "N/A"); // 이메일이 없을 경우 기본값 설정
             }
 
-            // ✅ 닉네임
+            // 닉네임
             if (jsonNode.has("properties") && jsonNode.get("properties").has("nickname")) {
                 userInfo.put("nickname", jsonNode.get("properties").get("nickname").asText());
             }
 
-            // ✅ 이름 (nickname과 동일할 수도 있음)
+            // 이름 (nickname과 동일할 수도 있음)
             if (jsonNode.has("kakao_account") && jsonNode.get("kakao_account").has("profile") &&
                     jsonNode.get("kakao_account").get("profile").has("nickname")) {
                 userInfo.put("name", jsonNode.get("kakao_account").get("profile").get("nickname").asText());
             }
 
-            // ✅ 전화번호
+            // 전화번호
             if (jsonNode.has("kakao_account") && jsonNode.get("kakao_account").has("phone_number")) {
                 userInfo.put("phone", jsonNode.get("kakao_account").get("phone_number").asText());
                 phone = jsonNode.get("kakao_account").get("phone_number").asText();
@@ -115,7 +115,7 @@ public class KakaoAuthService {
                 userInfo.put("phone", "N/A"); // 전화번호가 없을 경우 기본값 설정
             }
 
-            // ✅ 랜덤 비밀번호 생성 (카카오 로그인용)
+            // 랜덤 비밀번호 생성 (카카오 로그인용)
             String randomPwd = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 12);
             userInfo.put("password", randomPwd);
 

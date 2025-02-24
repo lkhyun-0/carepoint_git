@@ -41,13 +41,13 @@ function kakaoLogin() {
         success: function (authObj) {
             //console.log(" 카카오 로그인 성공!", authObj);
 
-            // ✅ 4. 사용자 정보 요청 (프로필 & 이메일 가져오기)
+            // 4. 사용자 정보 요청 (프로필 & 이메일 가져오기)
             Kakao.API.request({
                 url: "/v2/user/me",
                 success: function (userInfo) {
                     //console.log(" 카카오 사용자 정보:", userInfo);
 
-                    // 🔹 서버로 전달할 데이터 정리
+                    //  서버로 전달할 데이터 정리
                     let kakaoUser = {
                         userId: userInfo.id.toString(),
                         userNick: userInfo.properties.nickname,
@@ -57,7 +57,7 @@ function kakaoLogin() {
 
                     //console.log("서버로 보낼 카카오 유저 데이터:", kakaoUser);
 
-                    // ✅ 5. 서버에 카카오 로그인 데이터 전송
+                    // 5. 서버에 카카오 로그인 데이터 전송
                     fetch("/user/kakaoSignIn", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },

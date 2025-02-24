@@ -103,7 +103,7 @@ function checkNickname() {
         .catch(error => console.error("Error:", error));
 }// 회원가입시 닉네임 중복체크 하는 스크립트
 
-// ✅ 아이디 또는 닉네임이 변경될 때 버튼 상태 초기화
+// 아이디 또는 닉네임이 변경될 때 버튼 상태 초기화
 document.getElementById("userId").addEventListener("input", function () {
     document.getElementById("id-btn").value = "N";
 });

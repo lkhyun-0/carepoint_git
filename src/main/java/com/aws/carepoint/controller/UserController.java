@@ -30,7 +30,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final UserMapper userMapper; // 🔹 userMapper 추가
+    private final UserMapper userMapper;
     private final DetailService detailService;
     private final DetailMapper detailMapper;
     private final FreeMapper freeMapper;
@@ -267,9 +267,9 @@ public class UserController {
 
         String findUserPk = userMapper.findPhoneByPhone(kakaoUser.getPhone());
 
-        String phone = normalizePhoneNumber(kakaoUser.getPhone());
+        //String phone = normalizePhoneNumber(kakaoUser.getPhone());
 
-        Integer userPk = (findUserPk != null && !findUserPk.isEmpty()) ? Integer.parseInt(findUserPk) : null;
+        Integer userPk = (findUserPk != null && !findUserPk.isEmpty()) ? Integer.parseInt(findUserPk) : null;   // 있으면 숫자형으로 담고 아니면 널처리
 
         UsersDto existingUser = userMapper.findByEmail(kakaoUser.getEmail());
         String redirectUrl;
@@ -284,7 +284,7 @@ public class UserController {
 
             userMapper.insertUser(kakaoUser); // 사용자 정보 삽입
 
-            // 📌 회원정보 다시 조회
+            // 회원정보 다시 조회
             if (kakaoUser.getUserPk() == 0) {
                 existingUser = userMapper.findByEmail(kakaoUser.getEmail());
             } else {
@@ -305,7 +305,7 @@ public class UserController {
 
         response.put("message", "카카오 로그인 성공!");
         response.put("success", true);
-        response.put("redirect", redirectUrl);
+        response.put("redirect", redirectUrl);      // 메인페이지로 이동
 
         return ResponseEntity.ok(response);
     }
@@ -322,7 +322,7 @@ public class UserController {
 
     @GetMapping("logout")       // 세션에 담긴 값 삭제 초기화
     public ResponseEntity<Map<String, String>> logout(HttpSession session) {
-        session.invalidate(); // ✅ 세션 삭제
+        session.invalidate(); // 세션 삭제
         Map<String, String> response = new HashMap<>();
         response.put("message", "로그아웃되었습니다.");
         response.put("redirect", "/user/mainPage");
@@ -332,7 +332,7 @@ public class UserController {
 
     @PostMapping("findPassword")        // 비번 찾기
     public ResponseEntity<?> findPassword(@RequestBody Map<String, String> request) {
-        System.out.println("📌 받은 데이터: " + request); // 요청 데이터 출력
+        System.out.println("받은 데이터: " + request); // 요청 데이터 출력
         String userName = request.get("userName");
         String userId = request.get("userId");
         String phone = request.get("phone");
@@ -384,7 +384,7 @@ public class UserController {
 
     @PostMapping("modifyUserPwd")
     public ResponseEntity<?> modifyUserPwd(@RequestBody Map<String, String> request) {
-        // ✅ 요청에서 userPk 가져오기 (세션에서 가져올 필요 없음)
+        // 요청에서 userPk 가져오기 (세션에서 가져올 필요 없음)
         String userPkStr = request.get("userPk");
         String newPwd = request.get("newPassword");
 
@@ -408,7 +408,7 @@ public class UserController {
 
         //log.info("비밀번호 변경 요청 - UserPK: {}, 입력된 비밀번호: {}", userPk, newPwd);
 
-        // ✅ 새 비밀번호 암호화 후 저장
+        // 새 비밀번호 암호화 후 저장
         String encodedPwd = passwordEncoder.encode(newPwd);
         //log.info("비밀번호 암호화 완료 - UserPK: {}", userPk);
 

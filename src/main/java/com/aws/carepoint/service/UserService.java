@@ -103,7 +103,7 @@ public class UserService {
             newUser.setPhone(phone);
             newUser.setSocialLoginStatus(1); // 소셜 로그인 유저
 
-            userMapper.insertUser(newUser);  // 🔥 DB에 신규 회원 저장
+            userMapper.insertUser(newUser);  // DB에 신규 회원 저장
             existingUser = newUser; // 신규 회원 정보 저장
             //System.out.println("새로운 카카오 사용자 회원가입 완료! (ID: " + existingUser + ")");
         } else {
@@ -119,12 +119,12 @@ public class UserService {
         UsersDto usersDto = userMapper.findUserByNameAndIdAndPhone(userName, userId, phone);
 
         if (usersDto == null) {
-            System.out.println("⚠️ 일치하는 회원 정보 없음: userName=" + userName + ", userId=" + userId + ", phone=" + phone);
+            System.out.println("일치하는 회원 정보 없음: userName=" + userName + ", userId=" + userId + ", phone=" + phone);
             return false;  // 회원 정보 없음
         }
 
 // 조회된 정보 출력 (usersDto가 null이 아닐 때만)
-        System.out.println("📌 DB 조회 성공: userPk=" + usersDto.getUserPk());
+        System.out.println("DB 조회 성공: userPk=" + usersDto.getUserPk());
 
         // 2. 임시 비밀번호 생성
         String tempPassword = generateRandomPassword();
@@ -134,7 +134,7 @@ public class UserService {
 
         int updatedRows = userMapper.updateUserPassword(usersDto.getUserPk(), encodedPassword);
         if (updatedRows == 0) {
-            System.out.println("⚠️ 비밀번호 업데이트 실패: userPk=" + usersDto.getUserPk());
+            System.out.println("비밀번호 업데이트 실패: userPk=" + usersDto.getUserPk());
             return false;
         }
 
