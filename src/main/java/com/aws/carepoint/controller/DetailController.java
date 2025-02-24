@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@RestController // ✅ JSON 데이터를 반환하도록 @RestController 사용
-@RequestMapping("/detail/") // ✅ 기본 경로 설정
+@RestController // JSON 데이터를 반환하도록 @RestController 사용
+@RequestMapping("/detail/") // 기본 경로 설정
 public class DetailController {
     private final DetailService detailService;
     private final UserService  userService;
@@ -71,7 +71,7 @@ public class DetailController {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "회원 정보 수정 실패"));
             }
         } catch (Exception e) {
-            e.printStackTrace();  // ✅ 오류 메시지를 콘솔에 출력
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("success", false, "message", "서버 오류 발생", "error", e.getMessage()));
         }

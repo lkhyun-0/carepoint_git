@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // 클릭한 버튼에 active 추가
                 this.classList.add("active");
 
-                // 🚀 선택된 버튼의 값(hidden input) 설정 (data-value 사용)
+                // 선택된 버튼의 값(hidden input) 설정 (data-value 사용)
                 hiddenInput.value = this.getAttribute("data-value");
-                //console.log(`✅ ${hiddenInput.name} 값 변경:`, hiddenInput.value);
+                //console.log(` ${hiddenInput.name} 값 변경:`, hiddenInput.value);
             });
         });
     });
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.userPk) {
 
-                // 🚀 폼 제출 이벤트
+                // 폼 제출 이벤트
                 document.querySelector(".form").addEventListener("submit", function (event) {
                     event.preventDefault(); // 기본 제출 방지
 
@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         smoke: parseInt(smokingInput.value) || 0,
                         drink: parseInt(drinkingInput.value) || 0,
                         targetCount: 0,
-                        userPk: data.userPk // ✅ 세션에서 가져온 userPk 사용
+                        userPk: data.userPk //  세션에서 가져온 userPk 사용
                     };
 
-                    console.log("📢 서버로 보낼 데이터:", userData);
+                    console.log("서버로 보낼 데이터:", userData);
 
                     fetch("/user/doInsertDetail", {
                         method: "POST",

@@ -18,10 +18,10 @@ public class KakaoAuthController {
     private final KakaoAuthService kakaoAuthService;
     private final UserService userService;
 
-    @Value("${kakao.client-id}")  // ✅ 경로 수정!
+    @Value("${kakao.client-id}")  // 경로 수정!
     private String clientId;
 
-    @Value("${kakao.redirect-uri}")  // ✅ 경로 수정!
+    @Value("${kakao.redirect-uri}")  // 경로 수정!
     private String redirectUri;
 
     public KakaoAuthController(KakaoAuthService kakaoAuthService, UserService userService) {
@@ -39,27 +39,25 @@ public class KakaoAuthController {
         Map<String, String> response = new HashMap<>();
         response.put("kakaoAuthUrl", kakaoUrl);
 
-        return ResponseEntity.ok(response); // ✅ JSON 형식으로 반환
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/login/oauth2/code/kakao")
     public ResponseEntity<Map<String, Object>> kakaoCallback(@RequestParam("code") String code, HttpSession session) {
-        //System.out.println("📢 받은 카카오 인증 코드: " + code);
 
-        // 1️⃣ 액세스 토큰 요청
         String accessToken = kakaoAuthService.getKakaoAccessToken(code);
-        //System.out.println("📢 받은 액세스 토큰: " + accessToken);
+        //System.out.println(" 받은 액세스 토큰: " + accessToken);
 
-        // 2️⃣ 사용자 정보 요청
+        //사용자 정보 요청
         Map<String, Object> userInfo = kakaoAuthService.getUserInfo(accessToken);
-        //System.out.println("📢 받은 사용자 정보: " + userInfo);
+        //System.out.println("받은 사용자 정보: " + userInfo);
 
-        // 3️⃣ 사용자 정보 저장 및 로그인 처리
+        // 사용자 정보 저장 및 로그인 처리
         UsersDto usersDto = userService.processKakaoLogin(userInfo, session);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "카카오 로그인 성공!");
-        response.put("redirect", "/user/mainPage"); // 🚀 메인 페이지로 리다이렉트
+        response.put("redirect", "/user/mainPage"); // 메인 페이지로 리다이렉트
 
         return ResponseEntity.ok(response);
     }
