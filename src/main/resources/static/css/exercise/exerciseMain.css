@@ -798,7 +798,7 @@
     width: 300px;
     text-align: center;
     position: relative;
-    height: 250px;
+    min-height: 250px;
 }
 
 .modal-content > p {

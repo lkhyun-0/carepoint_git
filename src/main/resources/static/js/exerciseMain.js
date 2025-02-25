@@ -48,6 +48,17 @@ function setupPopupHandlers() {
     $(".exercise-type-popup-content").on("click", function (event) {
         event.stopPropagation();
     });
+
+
+    $('.close-btn').click(function () {
+        $('.modal').css('display', 'none');
+    });
+    $(".event-modal").on("click", function () {
+        $(this).hide();
+    });
+    $(".modal-content").on("click", function (event) {
+        event.stopPropagation();
+    });
 }
 
 /* =========================================================
